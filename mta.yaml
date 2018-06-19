@@ -1,0 +1,51 @@
+ID: SampleApp
+_schema-version: '2.1'
+description: Sample App - NodeJS/HANA DB/Authentication and Authorization
+version: 0.0.1
+modules:
+  - name: core-js
+    type: nodejs
+    path: core-js
+    parameters:
+      disk-quota: 350M
+      memory: 350M
+    provides:
+      - name: core-js_api
+        properties:
+          url: '${default-url}'
+    requires:
+      - name: SampleUAA
+      - name: hdi_core-db
+      - name: core-db
+        
+  - name: web
+    type: html5
+    path: web
+    parameters:
+      disk-quota: 350M
+      memory: 350M
+    build-parameters:
+      builder: grunt
+    requires:
+      - name: SampleUAA
+      - name: core-js_api
+        group: destinations
+        properties:
+          name: core-backend
+          url: '~{url}'
+          forwardAuthToken: true
+  - name: core-db
+    type: hdb
+    path: core-db
+    requires:
+      - name: hdi_core-db
+      - name: SampleUAA
+resources:
+  - name: SampleUAA
+    type: com.sap.xs.uaa
+    parameters:
+      config-path: ./xs-security.json
+  - name: hdi_core-db
+    properties:
+      hdi-container-name: '${service-name}'
+    type: com.sap.xs.hdi-container

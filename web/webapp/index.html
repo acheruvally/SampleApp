@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html>
+
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta charset="UTF-8">
+
+		<title>web</title>
+
+		<script id="sap-ui-bootstrap"
+			src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+			data-sap-ui-libs="sap.m"
+			data-sap-ui-theme="sap_belize"
+			data-sap-ui-compatVersion="edge"
+			data-sap-ui-resourceroots='{"Sample.web": "./"}'>
+		</script>
+
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+
+		<!--<script>-->
+		<!--	sap.ui.getCore().attachInit(function() {-->
+		<!--		new sap.m.Shell({-->
+		<!--			app: new sap.ui.core.ComponentContainer({-->
+		<!--				height : "100%",-->
+		<!--				name : "Sample.web"-->
+		<!--			})-->
+		<!--		}).placeAt("content");-->
+		<!--	});-->
+		<!--</script>-->
+		<title>JavaScript Tutorial</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script>
+    function fetchCsrfToken(callback) {
+      jQuery.ajax({
+          url: '/core-js/displayOrders',
+          type: 'HEAD',
+          headers: { 'x-csrf-token': 'fetch' }
+        })
+        .done(function(message, text, jqXHR) {
+          callback(jqXHR.getResponseHeader('x-csrf-token'))
+        })
+        .fail(function(jqXHR, textStatus, errorThrown) {
+          alert('Error fetching CSRF token: ' + jqXHR.status + ' ' + errorThrown);
+        });
+    }
+
+    function addNewUser(token) {
+      var name = jQuery('#name').val() || '--';
+      jQuery.ajax({
+          url: '/core-js/createOrder',
+          type: 'POST',
+          headers: { 'x-csrf-token': token },
+          contentType: 'application/json',
+          data: JSON.stringify({ name: name })
+        })
+        .done(function() {
+          alert( 'success' );
+          window.location = '/core-js/displayOrders'
+        })
+        .fail(function(jqXHR, textStatus, errorThrown) {
+          //alert('Error adding new user: ' + jqXHR.status + ' ' + errorThrown);
+        });
+    }
+
+    function addUser() {
+      fetchCsrfToken(addNewUser);
+    }
+  </script>	
+	</head>
+
+	<body class="sapUiBody" id="content">
+		
+		<h1>JavaScript Tutorial</h1>
+		<a href="/core-js/displayOrders">Show Orders</a>
+		<br/>
+		<a href="/core-js/showJWTToken">Show JWT Tocken</a>
+		<br/>
+		<a href="/core-js/showUserInfo">Show Applicationn User Info from JS</a>
+		<br/>
+		<a href="/core-js/showUserAttributeDB">Show Applicationn User Info from DB</a>
+		<br/>
+		<a href="/core-js/showSessionContextDB">Show session context from DB</a>	
+
+	<input type="button" value="Add User" onClick="javascript: addUser()"></input>	
+	</body>
+
+</html>

@@ -1,0 +1,17 @@
+context orders {
+
+    /*@@layout{"layoutInfo":{"x":133,"y":169.5}}*/
+    entity Sales {
+        key OrderID   : Integer generated always as identity(start with 1 increment by 1);
+            Amount    : Double default 250;
+            Country   : String(10);
+            CreatedBy : String(100);
+    };
+    
+    VIEW SalesOrders AS SELECT FROM orders.Sales {
+        OrderID,
+        Amount,
+        Country,
+        CreatedBy
+    };
+};
