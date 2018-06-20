@@ -49,7 +49,7 @@ app.get('/displayOrders', function (req, res, next) {
   
 });
 
-app.get('/showSessionContextDB', function (req, res, next) {
+app.get('/showSessionContextFromDB', function (req, res, next) {
   var sql = 'select * from M_SESSION_CONTEXT';				
   req.db.exec(sql, function(err, results) {
 		if (err) {
@@ -60,9 +60,23 @@ app.get('/showSessionContextDB', function (req, res, next) {
   
 });
 
-app.get('/showUserAttributeDB', function (req, res, next) {
+app.get('/showUserAttributesFromDB', function (req, res, next) {
   var sql = 'select SESSION_CONTEXT(' +
-			// "'XS_COUNTRY'"+ ')' +
+			"'XS_COUNTRY'"+ ')' +
+			' from "DUMMY"';
+						
+  req.db.exec(sql, function(err, results) {
+		if (err) {
+			res.type("text/plain").status(500).send("ERROR: " + err.toString());
+			return;
+		}
+		res.status(200).json(results); });
+  
+});
+
+
+app.get('/showUserAppUserFromDB', function (req, res, next) {
+  var sql = 'select SESSION_CONTEXT(' +
 			"'APPLICATIONUSER'" + ')' +
 			' from "DUMMY"';
 						
