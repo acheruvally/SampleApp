@@ -1,5 +1,5 @@
 {
-	"xsappname": "web",
+	"xsappname": "SampleApp",
 	"tenant-mode": "dedicated",
 	"scopes": [{
 		"name": "$XSAPPNAME.Display",
@@ -7,9 +7,10 @@
 	}, {
 		"name": "$XSAPPNAME.Edit",
 		"description": "edit"
-	}, {
-		"name": "$XSAPPNAME.Delete",
-		"description": "delete"
+	}, 
+	{
+		"name": "$XSAPPNAME.JWTViewer",
+		"description": "View JWT Info"
 	}],
 
 	"attributes": [{
@@ -24,15 +25,19 @@
 			"$XSAPPNAME.Display"
 		],
 		"attribute-references": ["Country"]
-	}, {
+	}, 
+	{
+		"name": "JWTViewer",
+		"description": "View JWT Token Information",
+		"scope-references": [
+			"$XSAPPNAME.JWTViewer"
+		],
+		"attribute-references": ["Country"]
+	},{
 		"name": "Editor",
 		"description": "Create, edit,delete orders",
 		"scope-references": [
-			"$XSAPPNAME.Edit",
-			"$XSAPPNAME.Delete"
-		],
-		"attribute-references": [
-			"Country"
-		]
+			"$XSAPPNAME.Edit"
+		],"attribute-references": ["Country"]
 	}]
 }

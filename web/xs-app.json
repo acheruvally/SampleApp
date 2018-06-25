@@ -13,7 +13,10 @@
        {
       "source": "^/core-js/(.*)$",
       "target": "$1",
-      "destination": "core-backend"
+      "destination": "core-backend",
+      "csrfProtection": true,
+	  "authenticationType": "xsuaa"
+      
     }
   ]
 }
