@@ -39,7 +39,7 @@ modules:
     path: core-db
     requires:
       - name: hdi_core-db
-      - name: SampleUAA
+      
 resources:
   - name: SampleUAA
     type: com.sap.xs.uaa
