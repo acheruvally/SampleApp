@@ -1,5 +1,5 @@
 {
-    "plugin_version" : "12.1.0",
+    "plugin_version" : "12.1.0" ,
     "file_suffixes" : {
         "hdbcollection" : {
             "plugin_name" : "com.sap.hana.di.collection"
